@@ -1,0 +1,20 @@
+{
+  "amplify": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-capstoneiot-amplify-222422-authRole",
+      "UnauthRoleArn": "arn:aws:iam::605114030558:role/amplify-capstoneiot-amplify-222422-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::605114030558:role/amplify-capstoneiot-amplify-222422-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-capstoneiot-amplify-222422-deployment",
+      "UnauthRoleName": "amplify-capstoneiot-amplify-222422-unauthRole",
+      "StackName": "amplify-capstoneiot-amplify-222422",
+      "StackId": "arn:aws:cloudformation:us-east-2:605114030558:stack/amplify-capstoneiot-amplify-222422/62ae8fc0-8923-11eb-b971-02fbfa560ae8",
+      "AmplifyAppId": "ddfxuah9qjmuk"
+    },
+    "categories": {
+      "auth": {
+        "capstoneiot73dcae8a": {}
+      }
+    }
+  }
+}
