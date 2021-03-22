@@ -130,6 +130,7 @@ public class Cognito {
 //        this.userPassword = password;
 //        cognitoUser.getSessionInBackground(authenticationHandler);
 //    }
+
     // Callback handler for the sign-in process
     AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
         @Override

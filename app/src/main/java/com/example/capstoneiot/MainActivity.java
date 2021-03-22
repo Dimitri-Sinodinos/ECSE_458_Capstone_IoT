@@ -53,16 +53,16 @@ public class MainActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(this, Signup.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, Signup.class);
+                startActivity(intent);
             }
         });
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(this, Login.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                startActivity(intent);
             }
         });
     }
@@ -96,33 +96,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public void signUp(String username, String password, String email){
-//        AuthSignUpOptions options = AuthSignUpOptions.builder()
-//                .userAttribute(AuthUserAttributeKey.email(), email)
-//                .build();
-//        Amplify.Auth.signUp(username, password, options,
-//                result -> Log.i("AuthQuickStart", "Result: " + result.toString()),
-//                error -> Log.e("AuthQuickStart", "Sign up failed", error)
-//        );
-//    }
-
-//    public void confirmSignUp(String username, String confirmationCode){
-//        Amplify.Auth.confirmSignUp(
-//                username,
-//                confirmationCode,
-//                result -> Log.i("AuthQuickstart", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
-//    }
-
-//    public void signIn(String username, String password) {
-//        Amplify.Auth.signIn(
-//                username,
-//                password,
-//                result -> Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
-//    }
 
     public void provisionDevice(Context context, String deviceId) {
         AWSMobileClient mobileClient = (AWSMobileClient) Amplify.Auth.getPlugin("awsCognitoAuthPlugin").getEscapeHatch();

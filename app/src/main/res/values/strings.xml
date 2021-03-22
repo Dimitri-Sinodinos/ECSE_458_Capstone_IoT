@@ -14,5 +14,11 @@
     <string name="NotAccount">Don\'t have account?</string>
     <string name="ForgetPass">Forget Your Password?</string>
     <string name="AgreeTerms">Agree to the Terms and Conditions</string>
+    <string name="HomeMessage">Login or Signup to Connect to AWS</string>
+    <string name="Connected">Your account is now connected to AWS</string>
+    <string name="PublishMessage">Publish a message!</string>
+    <string name="ExamplePublish">Hello World!</string>
+    <string name="Publish">Publish</string>
+    <string name="Connect">Connect</string>
 
 </resources>

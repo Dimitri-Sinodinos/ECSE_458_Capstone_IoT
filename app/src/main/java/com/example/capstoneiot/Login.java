@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Login extends AppCompatActivity {
 
-    TextView txtNotAccount;     // For creating account
     Button btnLogin;            // Button for Login
     EditText etUsername;
     EditText etPassword;
@@ -29,18 +28,14 @@ public class Login extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
 
-        txtNotAccount.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Login.this, Signup.class));
-            }
-        });
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Cognito authentication = new Cognito(getApplicationContext());
                 authentication.signIn(etUsername.getText().toString().replace(" ", ""), etPassword.getText().toString());
+
+                Intent intent = new Intent(Login.this, Connected.class);
+                startActivity(intent);
             }
         });
     }
