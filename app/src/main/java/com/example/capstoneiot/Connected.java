@@ -113,6 +113,17 @@ public class Connected extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        try {
+            mqttManager.disconnect();
+            Log.i("AWS_IOT_CORE", "Disconnected success");
+        } catch (Exception e) {
+            Log.e("AWS_IOT_CORE", "Disconnect error: ", e);
+        }
+        super.onDestroy();
+    }
+
     public void publish(String message, String topic){
         try {
             mqttManager.publishString(message, topic, AWSIotMqttQos.QOS0);
