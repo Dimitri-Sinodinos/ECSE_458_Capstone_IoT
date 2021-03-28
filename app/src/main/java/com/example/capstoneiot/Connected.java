@@ -34,6 +34,8 @@ public class Connected extends AppCompatActivity {
     private static final Regions REGION = Regions.US_EAST_2;
     private static final String ENDPOINT = "a2wpi43vanpwli-ats.iot.us-east-2.amazonaws.com";
 
+    private static final String TAG = Connected.class.getName();
+
     private String policy = "MyIoTPolicy";
 
     String clientID;
@@ -41,6 +43,7 @@ public class Connected extends AppCompatActivity {
     AWSIotClient iotClient;
 
     Button btnPublish;
+    Button btnBluetooth;
     EditText etPublish;
 
 
@@ -50,6 +53,7 @@ public class Connected extends AppCompatActivity {
         setContentView(R.layout.activity_connected);
 
         btnPublish = findViewById(R.id.btnPublish);
+        btnBluetooth = findViewById(R.id.btnBluetooth);
         etPublish = findViewById(R.id.etPublish);
 
 
@@ -58,7 +62,7 @@ public class Connected extends AppCompatActivity {
             @Override
             public void onResult(UserStateDetails userStateDetails) {
 
-                Log.i("AWS_IOT_CORE", "onResult: " + userStateDetails.getUserState());
+                Log.i(TAG, "onResult: " + userStateDetails.getUserState());
 
                 clientID = UUID.randomUUID().toString();
                 mqttManager = new AWSIotMqttManager(clientID, ENDPOINT);
@@ -92,14 +96,14 @@ public class Connected extends AppCompatActivity {
                 mqttManager.connect(credentialsProvider, new AWSIotMqttClientStatusCallback() {
                     @Override
                     public void onStatusChanged(AWSIotMqttClientStatus status, Throwable throwable) {
-                        Log.d("AWS_IOT_CORE", "Connection Status: " + String.valueOf(status));
+                        Log.d(TAG, "Connection Status: " + String.valueOf(status));
                     }
                 });
             }
 
             @Override
             public void onError(Exception e) {
-                Log.e("AWS_IOT_CORE", "Initialization error.", e);
+                Log.e(TAG, "Initialization error.", e);
             }
 
         });
@@ -111,15 +115,23 @@ public class Connected extends AppCompatActivity {
                 etPublish.getText().clear();
             }
         });
+
+        btnBluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Connected.this, DeviceScanActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         try {
             mqttManager.disconnect();
-            Log.i("AWS_IOT_CORE", "Disconnected success");
+            Log.i(TAG, "Disconnected success");
         } catch (Exception e) {
-            Log.e("AWS_IOT_CORE", "Disconnect error: ", e);
+            Log.e(TAG, "Disconnect error: ", e);
         }
         super.onDestroy();
     }
@@ -129,7 +141,7 @@ public class Connected extends AppCompatActivity {
             mqttManager.publishString(message, topic, AWSIotMqttQos.QOS0);
             Toast.makeText(getApplicationContext(),"Message Published", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.e("AWS_IOT_CORE", "Publish error: ", e);
+            Log.e(TAG, "Publish error: ", e);
             Toast.makeText(getApplicationContext(),"Could Not Publish", Toast.LENGTH_SHORT).show();
         }
     }
