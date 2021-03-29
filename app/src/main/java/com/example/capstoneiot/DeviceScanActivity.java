@@ -16,22 +16,26 @@
 
 package com.example.capstoneiot;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,6 +52,8 @@ public class DeviceScanActivity extends ListActivity {
     private boolean mScanning;
     private Handler mHandler;
 
+    private final static String TAG = DeviceScanActivity.class.getSimpleName();
+    private static final int ACCESS_COARSE_LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
@@ -59,6 +65,7 @@ public class DeviceScanActivity extends ListActivity {
         getActionBar().setIcon(R.mipmap.bluetooth);
         mHandler = new Handler();
 
+        verifyPermissions();
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -152,7 +159,7 @@ public class DeviceScanActivity extends ListActivity {
         intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
         intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         if (mScanning) {
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            mBluetoothAdapter.getBluetoothLeScanner().stopScan(mLeScanCallback);
             mScanning = false;
         }
         startActivity(intent);
@@ -165,18 +172,32 @@ public class DeviceScanActivity extends ListActivity {
                 @Override
                 public void run() {
                     mScanning = false;
-                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    mBluetoothAdapter.getBluetoothLeScanner().stopScan(mLeScanCallback);
                     invalidateOptionsMenu();
                 }
             }, SCAN_PERIOD);
 
             mScanning = true;
-            mBluetoothAdapter.startLeScan(mLeScanCallback);
+            mBluetoothAdapter.getBluetoothLeScanner().startScan(mLeScanCallback);
         } else {
             mScanning = false;
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            mBluetoothAdapter.getBluetoothLeScanner().startScan(mLeScanCallback);
         }
         invalidateOptionsMenu();
+    }
+
+    private boolean verifyPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION }, ACCESS_COARSE_LOCATION_REQUEST);
+                // requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, ACCESS_COARSE_LOCATION_REQUEST);
+                Log.i(TAG, "Location Permission: " + getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+                return false;
+            }
+            // requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, ACCESS_COARSE_LOCATION_REQUEST);
+            Log.i(TAG, "Location Permission: " + getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+        }
+        return true;
     }
 
     // Adapter for holding devices found through scanning.
@@ -246,15 +267,14 @@ public class DeviceScanActivity extends ListActivity {
     }
 
     // Device scan callback.
-    private BluetoothAdapter.LeScanCallback mLeScanCallback =
-            new BluetoothAdapter.LeScanCallback() {
-
+    private ScanCallback mLeScanCallback =
+            new ScanCallback() {
         @Override
-        public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+        public void onScanResult(int callbackType, ScanResult result) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mLeDeviceListAdapter.addDevice(device);
+                    mLeDeviceListAdapter.addDevice(result.getDevice());
                     mLeDeviceListAdapter.notifyDataSetChanged();
                 }
             });
