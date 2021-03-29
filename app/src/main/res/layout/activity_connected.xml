@@ -26,28 +26,41 @@
         android:text="@string/PublishMessage"
         android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/etPublish"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:id="@+id/PublishLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="425dp"
-        android:hint="@string/ExamplePublish"
-        android:inputType="text" />
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:id="@+id/etPublish"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:hint="@string/ExamplePublish"
+            android:inputType="text" />
+
+        <ImageButton
+            android:id="@+id/btnRecord"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            android:background="@drawable/microphone_foreground" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnPublish"
         android:layout_width="239dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/etPublish"
+        android:layout_alignBottom="@id/PublishLayout"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="362dp"
+        android:layout_marginBottom="290dp"
         android:text="@string/Publish"
         android:textSize="20sp" />
 
@@ -55,7 +68,7 @@
         android:id="@+id/btnBluetooth"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/etPublish"
+        android:layout_alignBottom="@id/PublishLayout"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
