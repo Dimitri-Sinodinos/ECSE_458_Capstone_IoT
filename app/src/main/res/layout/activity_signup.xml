@@ -6,101 +6,160 @@
     android:layout_height="match_parent"
     tools:context=".Signup">
 
-    <EditText
-        android:id="@+id/etUsername"
-        android:autofillHints="@string/Username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/Username"
-        android:inputType="textPersonName"
-        android:layout_centerHorizontal="true" />
+    <ImageView
+        android:id="@+id/ivLoginImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_add_user" />
 
-    <EditText
-        android:id="@+id/etEmail"
-        android:autofillHints="@string/Email"
-        android:layout_centerHorizontal="true"
+    <LinearLayout
+        android:id="@+id/llSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="-58dp"
-        android:ems="10"
-        android:hint="@string/Email"
-        android:inputType="textPersonName|textWebEmailAddress"
-        android:layout_alignBottom="@id/etUsername"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/llUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/etPass"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:autofillHints="@string/Password"
-        android:layout_marginBottom="-58dp"
-        android:ems="10"
-        android:hint="@string/Password"
-        android:inputType="textPassword"
-        android:layout_alignBottom="@id/etEmail"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_account_circle_24px"
+                android:layout_gravity="center"/>
 
-    <EditText
-        android:id="@+id/etRepeatPass"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="-58dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/RepeatPassword"
-        android:autofillHints="@string/RepeatPassword"
-        android:inputType="textPassword"
-        android:layout_alignBottom="@id/etPass"/>
+            <EditText
+                android:id="@+id/etUsername"
+                android:autofillHints="@string/Username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="@string/Username"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_email_24px"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:autofillHints="@string/Email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="@string/Email"
+                android:inputType="textPersonName|textWebEmailAddress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_lock_24dp"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/etPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:autofillHints="@string/Password"
+                android:ems="10"
+                android:hint="@string/Password"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRepeatPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_repeat_24px"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/etRepeatPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="@string/RepeatPassword"
+                android:autofillHints="@string/RepeatPassword"
+                android:inputType="textPassword" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="64dp"
         android:text="@string/SignUp"
-        android:layout_alignBottom="@id/etRepeatPass"
-        android:layout_marginBottom="-58dp"
+        android:layout_below="@id/llSignup"
         android:layout_centerHorizontal="true"/>
 
-    <EditText
-        android:id="@+id/etConfCode"
+    <LinearLayout
+        android:id="@+id/llConfCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/ConfCode"
-        android:autofillHints="@string/ConfCode"
-        android:inputType="number"
-        android:layout_alignBottom="@id/btnSignUp"
-        android:layout_marginBottom="-100dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginBottom="16dp"
+        android:layout_below="@+id/btnSignUp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_vpn_key_24px"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/etConfCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="@string/ConfCode"
+            android:autofillHints="@string/ConfCode"
+            android:inputType="number" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnVerify"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/Verify"
-        android:layout_alignBottom="@id/etConfCode"
-        android:layout_marginBottom="-58dp"
+        android:layout_below="@id/llConfCode"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

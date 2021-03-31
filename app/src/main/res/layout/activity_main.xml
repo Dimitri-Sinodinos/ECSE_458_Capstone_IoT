@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/ivHomeImage"
+        android:layout_marginTop="32dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_online_world" />
+
     <TextView
+        android:id="@+id/tvHomePrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/Buttons"
+        android:layout_marginTop="64dp"
+        android:layout_below="@+id/ivHomeImage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-73dp"
         android:text="@string/HomeMessage"
         android:textSize="20sp" />
 
@@ -19,30 +28,28 @@
         android:id="@+id/Buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true">
+        android:orientation="vertical"
+        android:layout_marginBottom="132dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/goToLogin"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:text="@string/Login" />
 
         <Button
             android:id="@+id/goToSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:textSize="18sp"
-            android:text="@string/SignUp"
-            android:layout_centerInParent="true" />
-
-        <Button
-            android:id="@+id/goToLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="18sp"
-            android:text="@string/Login" />
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:text="@string/SignUp" />
 
     </LinearLayout>
 
