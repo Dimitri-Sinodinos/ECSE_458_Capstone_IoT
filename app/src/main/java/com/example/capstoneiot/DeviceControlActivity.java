@@ -242,6 +242,10 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
+    private void processData(String data) {
+
+    }
+
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
     // In this sample, we populate the data structure that is bound to the ExpandableListView
     // on the UI.

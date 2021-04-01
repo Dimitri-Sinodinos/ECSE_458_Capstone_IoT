@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,7 +36,7 @@ public class Login extends AppCompatActivity {
                 Cognito authentication = new Cognito(getApplicationContext());
                 authentication.signIn(etUsername.getText().toString().replace(" ", ""), etPassword.getText().toString());
 
-                Intent intent = new Intent(Login.this, Connected.class);
+                Intent intent = new Intent(Login.this, CloudConnectedActivity.class);
                 startActivity(intent);
             }
         });

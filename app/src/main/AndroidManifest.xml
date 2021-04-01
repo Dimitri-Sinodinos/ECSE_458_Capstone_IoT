@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
-        <activity android:name=".Connected"
+        <activity android:name=".CloudConnectedActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <activity

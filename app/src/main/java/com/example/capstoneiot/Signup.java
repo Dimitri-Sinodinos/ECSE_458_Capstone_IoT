@@ -62,7 +62,7 @@ public class Signup extends AppCompatActivity {
             public void onClick(View view) {
                 authentication.confirmSignUp(etUsername.getText().toString(), etConfCode.getText().toString().replace(" ", ""));
 
-                Intent intent = new Intent(Signup.this, Connected.class);
+                Intent intent = new Intent(Signup.this, CloudConnectedActivity.class);
                 startActivity(intent);
             }
         });
