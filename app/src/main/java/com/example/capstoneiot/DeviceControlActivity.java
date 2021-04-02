@@ -17,6 +17,7 @@
 package com.example.capstoneiot;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -25,19 +26,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.NumberPicker;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
@@ -50,6 +58,14 @@ public class DeviceControlActivity extends Activity {
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
+
+    Dialog mDialog;
+    Integer timeout;
+    Integer threshold;
+
+    AWSConnectionUtility awsConnectionUtility;
+
+    Date lastPublishTime;
 
     private TextView mConnectionState;
     private TextView mDataField;
@@ -64,6 +80,9 @@ public class DeviceControlActivity extends Activity {
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
+
+    public final static UUID UUID_TEST_MEASUREMENT =
+            UUID.fromString(SampleGattAttributes.TEMP_SENSOR_MEASUREMENT);
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -109,6 +128,7 @@ public class DeviceControlActivity extends Activity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+                processData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
         }
     };
@@ -141,6 +161,10 @@ public class DeviceControlActivity extends Activity {
                             mBluetoothLeService.setCharacteristicNotification(
                                     characteristic, true);
                         }
+
+                        if(UUID_TEST_MEASUREMENT.equals(characteristic.getUuid())){
+                            ShowPopup(v);
+                        }
                         return true;
                     }
                     return false;
@@ -157,6 +181,13 @@ public class DeviceControlActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gatt_services_characteristics);
 
+        mDialog = new Dialog(this);
+
+        awsConnectionUtility = AWSConnectionUtility.getInstance();
+
+        lastPublishTime = Calendar.getInstance().getTime();
+
+
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
@@ -169,8 +200,7 @@ public class DeviceControlActivity extends Activity {
         mDataField = (TextView) findViewById(R.id.data_value);
 
         getActionBar().setTitle(mDeviceName);
-        getActionBar().setIcon(R.mipmap.bluetooth);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(false);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
     }
@@ -243,7 +273,20 @@ public class DeviceControlActivity extends Activity {
     }
 
     private void processData(String data) {
-
+        if (data != null) {
+            try{
+                int val = Integer.parseInt(data);
+                if(threshold != null && val >= threshold){
+                    Date currentTime = Calendar.getInstance().getTime();
+                    if(timeout != null && (currentTime.getTime() - lastPublishTime.getTime())/1000 >= timeout){
+                        awsConnectionUtility.publish(data, "CapstoneTopic");
+                        lastPublishTime = currentTime;
+                    }
+                }
+            }catch (NumberFormatException e){
+                Log.i(TAG, "Data format error: ", e);
+            }
+        }
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
@@ -310,5 +353,50 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
+    }
+
+    public void ShowPopup(View v) {
+        Button btnSubmit;
+        NumberPicker npWarningVal;
+        NumberPicker npTimeout;
+
+        mDialog.setContentView(R.layout.iot_rule_characteristics);
+
+        npWarningVal = mDialog.findViewById(R.id.npWarningVal);
+        npTimeout = mDialog.findViewById(R.id.npTimeout);
+
+        npWarningVal.setMaxValue(100);
+        npWarningVal.setMinValue(0);
+        npTimeout.setMaxValue(100);
+        npTimeout.setMinValue(0);
+
+        if(threshold!=null){
+            npWarningVal.setValue(threshold);
+        }
+
+        if(timeout!=null){
+            npTimeout.setValue(timeout);
+        }
+
+        btnSubmit = mDialog.findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeout = npTimeout.getValue();
+                threshold = npWarningVal.getValue();
+
+                if(timeout==0){
+                    timeout = null;
+                }
+
+                if(threshold==0){
+                    threshold = null;
+                }
+
+                mDialog.dismiss();
+            }
+        });
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.show();
     }
 }

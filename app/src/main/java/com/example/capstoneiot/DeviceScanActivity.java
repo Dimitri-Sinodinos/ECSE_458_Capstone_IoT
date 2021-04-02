@@ -62,8 +62,7 @@ public class DeviceScanActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setTitle(R.string.title_devices);
-        getActionBar().setIcon(R.mipmap.bluetooth);
-        getListView().setBackgroundColor(getResources().getColor(R.color.list_view_background));
+        getActionBar().setDisplayShowHomeEnabled(false);
         mHandler = new Handler();
 
         verifyPermissions();

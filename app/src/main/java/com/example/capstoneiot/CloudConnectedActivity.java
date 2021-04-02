@@ -55,7 +55,8 @@ public class CloudConnectedActivity extends AppCompatActivity {
         btnBluetooth = findViewById(R.id.btnBluetooth);
         etPublish = findViewById(R.id.etPublish);
 
-        awsConnectionUtility = new AWSConnectionUtility(getApplicationContext());
+        awsConnectionUtility = AWSConnectionUtility.getInstance();
+        awsConnectionUtility.initialize(getApplicationContext());
 
         btnRecord.setOnClickListener(new View.OnClickListener() {
             @Override

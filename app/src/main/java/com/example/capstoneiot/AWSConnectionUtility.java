@@ -30,8 +30,11 @@ public class AWSConnectionUtility {
     AWSIotMqttManager mqttManager;
     AWSIotClient iotClient;
 
+    private static final AWSConnectionUtility instance = new AWSConnectionUtility();
 
-    public AWSConnectionUtility(Context applicationContext) {
+    private AWSConnectionUtility(){}
+
+    public void initialize(Context applicationContext) {
         AWSMobileClient.getInstance().initialize(applicationContext, new Callback<UserStateDetails>() {
 
             @Override
@@ -82,6 +85,10 @@ public class AWSConnectionUtility {
             }
 
         });
+    }
+
+    public static AWSConnectionUtility getInstance(){
+        return instance;
     }
 
     public boolean publish(String message, String topic){

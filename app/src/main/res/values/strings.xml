@@ -45,6 +45,10 @@
     <string name="menu_stop">Stop</string>
 
     <string name="Bluetooth">Connect a BLE Device</string>
+    <string name="timeout">Timeout</string>
+    <string name="warning_value">"Warning \nValue"</string>
+    <string name="configure_parameters">Configure your notification parameters</string>
+    <string name="submit">Submit</string>
 
 
 </resources>
