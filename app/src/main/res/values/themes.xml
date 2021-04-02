@@ -24,7 +24,7 @@
     </style>
 
     <style name="BLETitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
 
@@ -35,6 +35,6 @@
     </style>
 
     <style name="popupStyle">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/white</item>
     </style>
 </resources>

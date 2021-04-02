@@ -279,7 +279,8 @@ public class DeviceControlActivity extends Activity {
                 if(threshold != null && val >= threshold){
                     Date currentTime = Calendar.getInstance().getTime();
                     if(timeout != null && (currentTime.getTime() - lastPublishTime.getTime())/1000 >= timeout){
-                        awsConnectionUtility.publish(data, "CapstoneTopic");
+                        String message = "Your CAPSTONE_L475_IoT device is overheating. \n\nCURRENT TEMP: " + val;
+                        awsConnectionUtility.publish(message, "CapstoneTopic");
                         lastPublishTime = currentTime;
                     }
                 }
