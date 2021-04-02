@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Signup extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     EditText etUsername;        // Enter Username
     EditText etEmail;           // Enter Email
     EditText etPass;            // Enter Password
@@ -62,7 +62,7 @@ public class Signup extends AppCompatActivity {
             public void onClick(View view) {
                 authentication.confirmSignUp(etUsername.getText().toString(), etConfCode.getText().toString().replace(" ", ""));
 
-                Intent intent = new Intent(Signup.this, CloudConnectedActivity.class);
+                Intent intent = new Intent(SignupActivity.this, CloudConnectedActivity.class);
                 startActivity(intent);
             }
         });

@@ -28,8 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Signup" />
-        <activity android:name=".Login" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".CloudConnectedActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>

@@ -20,16 +20,11 @@ import com.amazonaws.services.iot.model.AttachPolicyRequest;
 import com.amazonaws.services.iot.model.CreateThingRequest;
 import com.amazonaws.services.iot.model.CreateThingResult;
 import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
-import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
-import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 
-import android.provider.Settings.Secure;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.UUID;
 
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Signup.class);
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
@@ -62,21 +57,11 @@ public class MainActivity extends AppCompatActivity {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
     }
-
-
-
-//        if(signUp = true){
-//            //signUp("testUsername", "testPassword", "dimitrios.sinodinos@mail.mcgill.ca");
-//            confirmSignUp("testUsername", "171922");
-//        }else{
-//            signIn("testUsername", "testPassword");
-//        }
-       // signIn("capstone-amplify-user", "");
 
         //provisionDevice(this.getBaseContext(), DEVICE_ID);
 //        connectToShadow(this.getBaseContext(), "capstoneAndroidDevice", new AWSIotMqttNewMessageCallback() {
